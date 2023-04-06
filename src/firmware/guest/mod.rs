@@ -111,7 +111,7 @@ impl Firmware {
 
         // KEEP for Kernels before 47894e0f (5.19), as userspace broke at that hash.
         if let Err(ioctl_error) = SNP_GET_EXT_REPORT.ioctl(&mut self.0, &mut guest_request) {
-            if guest_request.fw_err != INVALID_CERT_BUFFER {
+            if guest_request.fw_err != INVALID_CERT_BUFFER && guest_request.fw_err != 0 {
                 return Err(ioctl_error.into());
             }
         }
